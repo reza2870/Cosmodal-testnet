@@ -1,5 +1,6 @@
 import WalletConnect from "@walletconnect/client";
 import React, { FunctionComponent, ReactNode } from "react";
+import { ModalClassNames } from ".";
 export interface WalletInfo {
     id: string;
     name: string;
@@ -16,6 +17,7 @@ export declare const WalletManagerContext: React.Context<{
 export declare const WalletManagerProvider: FunctionComponent<{
     walletInfoList: WalletInfo[];
     children: ReactNode;
+    classNames?: ModalClassNames;
 }>;
 export declare const useWalletManager: () => {
     getWallet: () => Promise<any>;
