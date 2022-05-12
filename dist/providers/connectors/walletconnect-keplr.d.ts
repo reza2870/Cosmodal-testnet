@@ -27,15 +27,13 @@ export declare type KeplrKeystoreMayChangedEventParam = {
 export declare class KeplrWalletConnectV1 implements Keplr {
     readonly connector: IConnector;
     readonly chainInfos: ChainInfo[];
-    readonly options: {
-        kvStore?: KVStore;
-        onBeforeSendRequest?: (request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
-        onAfterSendRequest?: (response: any, request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
-    };
+    kvStore: KVStore;
+    onBeforeSendRequest?: (request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
+    onAfterSendRequest?: (response: any, request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
     constructor(connector: IConnector, chainInfos: ChainInfo[], options?: {
         kvStore?: KVStore;
-        onBeforeSendRequest?: (request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
-        onAfterSendRequest?: (response: any, request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
+        onBeforeSendRequest?: KeplrWalletConnectV1["onBeforeSendRequest"];
+        onAfterSendRequest?: KeplrWalletConnectV1["onAfterSendRequest"];
     });
     readonly version: string;
     readonly mode: KeplrMode;

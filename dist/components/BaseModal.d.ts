@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement, ReactNode } from "react";
 export interface ModalClassNames {
     modalContent?: string;
     modalOverlay?: string;
@@ -13,10 +13,11 @@ export interface ModalClassNames {
 }
 export interface BaseModalProps {
     isOpen: boolean;
-    onRequestClose: () => void;
+    onClose: () => void;
     title?: ReactElement | string;
     maxWidth?: string;
     classNames?: ModalClassNames;
+    closeIcon?: ReactNode;
 }
 export declare const BaseModal: FunctionComponent<BaseModalProps>;
 //# sourceMappingURL=BaseModal.d.ts.map
