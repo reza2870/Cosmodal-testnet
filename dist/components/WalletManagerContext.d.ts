@@ -10,6 +10,7 @@ export interface WalletInfo {
     description: string;
     logoImgUrl: string;
     getWallet: (connector?: WalletConnect) => Promise<WalletClient | undefined>;
+    isWalletConnect: boolean;
 }
 export declare const WalletManagerContext: React.Context<{
     getWallet: () => Promise<WalletClient | undefined>;
@@ -21,16 +22,18 @@ export declare enum Event {
     ModalClose = "modal_close",
     QrModalClose = "qr_modal_close"
 }
-export declare const WalletManagerProvider: FunctionComponent<{
+interface WalletManagerProviderProps {
     walletInfoList: WalletInfo[];
     children: ReactNode;
     classNames?: ModalClassNames;
     closeIcon?: ReactNode;
-}>;
+}
+export declare const WalletManagerProvider: FunctionComponent<WalletManagerProviderProps>;
 export declare const useWalletManager: () => {
     getWallet: () => Promise<WalletClient | undefined>;
     clearLastUsedWallet: () => void;
     setDefaultConnectionType: (type: string | undefined) => void;
     connectionType?: string | undefined;
 };
+export {};
 //# sourceMappingURL=WalletManagerContext.d.ts.map
