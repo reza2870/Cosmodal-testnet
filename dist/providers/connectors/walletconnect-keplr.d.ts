@@ -30,6 +30,7 @@ export declare class KeplrWalletConnectV1 implements Keplr {
     kvStore: KVStore;
     onBeforeSendRequest?: (request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
     onAfterSendRequest?: (response: any, request: Partial<IJsonRpcRequest>, options?: IRequestOptions) => Promise<void> | void;
+    lastDeepLinked: number;
     constructor(connector: IConnector, chainInfos: ChainInfo[], options?: {
         kvStore?: KVStore;
         onBeforeSendRequest?: KeplrWalletConnectV1["onBeforeSendRequest"];

@@ -1,3 +1,4 @@
+import { IClientMeta } from "@walletconnect/types";
 import React, { FunctionComponent, ReactNode } from "react";
 import { ModalClassNames } from ".";
 import { Wallet, WalletClient } from "./common";
@@ -17,6 +18,7 @@ interface WalletManagerProviderProps {
     classNames?: ModalClassNames;
     closeIcon?: ReactNode;
     defaultWalletId?: string | undefined;
+    clientMeta?: IClientMeta;
 }
 export declare const WalletManagerProvider: FunctionComponent<WalletManagerProviderProps>;
 export declare const useWalletManager: () => {
