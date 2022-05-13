@@ -25,6 +25,7 @@ interface WalletManagerProviderProps {
     preselectedWalletId?: string | undefined;
     clientMeta?: IClientMeta;
     attemptAutoConnect?: boolean;
+    renderEnablingKeplrModalContent?: () => ReactNode;
 }
 export declare const WalletManagerProvider: FunctionComponent<WalletManagerProviderProps>;
 export declare const useWalletManager: () => {
