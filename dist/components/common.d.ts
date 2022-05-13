@@ -9,5 +9,6 @@ export interface Wallet {
     logoImgUrl: string;
     getClient: (connector?: WalletConnect) => Promise<WalletClient | undefined>;
     isWalletConnect: boolean;
+    onSelect?: () => Promise<void>;
 }
 //# sourceMappingURL=common.d.ts.map
