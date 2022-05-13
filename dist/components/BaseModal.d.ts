@@ -3,6 +3,7 @@ export interface ModalClassNames {
     modalContent?: string;
     modalOverlay?: string;
     modalHeader?: string;
+    modalSubheader?: string;
     modalCloseButton?: string;
     walletList?: string;
     wallet?: string;
@@ -10,6 +11,7 @@ export interface ModalClassNames {
     walletInfo?: string;
     walletName?: string;
     walletDescription?: string;
+    textContent?: string;
 }
 export interface BaseModalProps {
     isOpen: boolean;
@@ -20,4 +22,5 @@ export interface BaseModalProps {
     closeIcon?: ReactNode;
 }
 export declare const BaseModal: FunctionComponent<BaseModalProps>;
+export declare const ModalSubheader: import("styled-components").StyledComponent<"div", any, {}, never>;
 //# sourceMappingURL=BaseModal.d.ts.map
