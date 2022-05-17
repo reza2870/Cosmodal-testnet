@@ -15,7 +15,7 @@ export interface ModalClassNames {
 }
 export interface BaseModalProps {
     isOpen: boolean;
-    onClose: () => void;
+    onClose?: () => void;
     title?: ReactElement | string;
     maxWidth?: string;
     classNames?: ModalClassNames;

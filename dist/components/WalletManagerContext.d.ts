@@ -8,7 +8,7 @@ interface ConnectedWallet {
 }
 export declare const WalletManagerContext: React.Context<{
     connect: () => void;
-    disconnect: () => void | Promise<void>;
+    disconnect: () => Promise<void>;
     connectedWallet?: ConnectedWallet | undefined;
     connectionError?: unknown;
     isMobileWeb: boolean;
@@ -25,12 +25,12 @@ interface WalletManagerProviderProps {
     preselectedWalletId?: string | undefined;
     clientMeta?: IClientMeta;
     attemptAutoConnect?: boolean;
-    renderEnablingKeplrModalContent?: () => ReactNode;
+    renderLoader?: () => ReactNode;
 }
 export declare const WalletManagerProvider: FunctionComponent<WalletManagerProviderProps>;
 export declare const useWalletManager: () => {
     connect: () => void;
-    disconnect: () => void | Promise<void>;
+    disconnect: () => Promise<void>;
     connectedWallet?: ConnectedWallet | undefined;
     connectionError?: unknown;
     isMobileWeb: boolean;
