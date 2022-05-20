@@ -6,34 +6,28 @@ interface ConnectedWallet {
     wallet: Wallet;
     client: WalletClient;
 }
-export declare const WalletManagerContext: React.Context<{
+interface WalletManagerContextInfo {
     connect: () => void;
     disconnect: () => Promise<void>;
-    connectedWallet?: ConnectedWallet | undefined;
+    connectedWallet?: ConnectedWallet;
     connectionError?: unknown;
     isMobileWeb: boolean;
-} | null>;
+}
+export declare const WalletManagerContext: React.Context<WalletManagerContextInfo | null>;
 export declare enum Event {
     WalletSelected = "wallet_selected"
 }
 interface WalletManagerProviderProps {
     wallets: Wallet[];
-    enableKeplr: (wallet: Wallet, walletClient: WalletClient) => Promise<void> | void;
-    children: ReactNode;
+    enableWallet: (wallet: Wallet, walletClient: WalletClient) => Promise<void> | void;
     classNames?: ModalClassNames;
     closeIcon?: ReactNode;
     preselectedWalletId?: string | undefined;
-    clientMeta?: IClientMeta;
+    walletConnectClientMeta?: IClientMeta;
     attemptAutoConnect?: boolean;
     renderLoader?: () => ReactNode;
 }
 export declare const WalletManagerProvider: FunctionComponent<WalletManagerProviderProps>;
-export declare const useWalletManager: () => {
-    connect: () => void;
-    disconnect: () => Promise<void>;
-    connectedWallet?: ConnectedWallet | undefined;
-    connectionError?: unknown;
-    isMobileWeb: boolean;
-};
+export declare const useWalletManager: () => WalletManagerContextInfo;
 export {};
 //# sourceMappingURL=WalletManagerContext.d.ts.map
