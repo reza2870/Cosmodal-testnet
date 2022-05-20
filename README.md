@@ -58,26 +58,38 @@ const enableWallet = async (wallet: Wallet, client: WalletClient) => {
   await client.enable(CHAIN_ID)
 }
 
-const wallets: Wallet[] = [
+const AvailableWallets: Wallet[] = [
   {
     id: "keplr-wallet-extension",
     name: "Keplr Wallet",
-    description: "Keplr Browser Extension",
-    logoImgUrl: "/keplr-wallet-extension.png",
-    getWallet: () => getKeplrFromWindow(),
+    description: "Keplr Chrome Extension",
+    imageUrl: "/keplr-wallet-extension.png",
+    isWalletConnect: false,
+    getClient: getKeplrFromWindow,
+    onSelect: async () => {
+      const hasKeplr = !!(await getKeplrFromWindow())
+      if (!hasKeplr) {
+        throw new KeplrNotInstalledError()
+      }
+    },
   },
-  {
-    id: "walletconnect-keplr",
-    name: "WalletConnect",
-    description: "Keplr Mobile",
-    logoImgUrl: "/walletconnect-keplr.png",
-    getWallet: (walletConnect?: WalletConnect) =>
-      Promise.resolve(
-        walletConnect
-          ? new KeplrWalletConnectV1(walletConnect, EmbedChainInfos)
-          : undefined
-      ),
-  },
+  // WalletConnect only supports mainnet. Not testnet.
+  ...(CHAIN_ID === "juno-1"
+    ? [
+        {
+          id: "walletconnect-keplr",
+          name: "WalletConnect",
+          description: "Keplr Mobile",
+          imageUrl: "/walletconnect-keplr.png",
+          isWalletConnect: true,
+          getClient: async (walletConnect?: WalletConnect) => {
+            if (walletConnect?.connected)
+              return new KeplrWalletConnectV1(walletConnect, [CHAIN_INFO])
+            throw new Error("Mobile wallet not connected.")
+          },
+        },
+      ]
+    : []),
 ]
 
 const MyApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => (
@@ -89,7 +101,7 @@ const MyApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => (
       url: "https://cosmodal.example.app",
       icons: ["https://cosmodal.example.app/walletconnect.png"],
     }}
-    wallets={wallets}
+    wallets={AvailableWallets}
   >
     <Component {...pageProps} />
   </WalletManagerProvider>
@@ -217,11 +229,6 @@ interface Wallet {
   onSelect?: () => Promise<void>
 }
 
-type EnableWalletFunction = (
-  wallet: Wallet,
-  client: WalletClient
-) => Promise<void> | void
-
 interface ModalClassNames {
   modalContent?: string
   modalOverlay?: string
@@ -262,16 +269,16 @@ interface WalletManagerContextInfo {
 
 This component takes the following properties:
 
-| Property                  | Type                   | Required | Description                                                                                                                                                                                                                                |
-| ------------------------- | ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `wallets`                 | `Wallet[]`             | &#x2611; | Wallets available for connection.                                                                                                                                                                                                          |
-| `enableWallet`            | `EnableWalletFunction` | &#x2611; | Function that enables the wallet once one is selected.                                                                                                                                                                                     |
-| `classNames`              | `ModalClassNames`      |          | Class names applied to various components for custom theming.                                                                                                                                                                              |
-| `closeIcon`               | `ReactNode`            |          | Custom close icon.                                                                                                                                                                                                                         |
-| `preselectedWalletId`     | `string \| undefined`  |          | When set, the connect function will skip the selection modal and attempt to connect to this wallet immediately.                                                                                                                            |
-| `walletConnectClientMeta` | `IClientMeta`          |          | Descriptive info about the React app which gets displayed when enabling a WalletConnect wallet (e.g. name, image, etc.).                                                                                                                   |
-| `attemptAutoConnect`      | `boolean`              |          | If set to true on initial mount, the connect function will be called as soon as possible. If `preselectedWalletId` is also set and a wallet has previously connected and enabled, this can be used to seamlessly reconnect a past session. |
-| `renderLoader`            | `() => ReactNode`      |          | A custom loader to display in a few modals, such as when enabling the wallet.                                                                                                                                                              |
+| Property                  | Type                                                     | Required | Description                                                                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| `wallets`                 | `Wallet[]`                                               | &#x2611; | Wallets available for connection.                                                                                                                                                                                                          |
+| `enableWallet`            | `(wallet: Wallet, client: WalletClient) => Promise<void> | void`    | &#x2611;                                                                                                                                                                                                                                   | Function that enables the wallet once one is selected. |
+| `classNames`              | `ModalClassNames`                                        |          | Class names applied to various components for custom theming.                                                                                                                                                                              |
+| `closeIcon`               | `ReactNode`                                              |          | Custom close icon.                                                                                                                                                                                                                         |
+| `preselectedWalletId`     | `string \| undefined`                                    |          | When set, the connect function will skip the selection modal and attempt to connect to this wallet immediately.                                                                                                                            |
+| `walletConnectClientMeta` | `IClientMeta`                                            |          | Descriptive info about the React app which gets displayed when enabling a WalletConnect wallet (e.g. name, image, etc.).                                                                                                                   |
+| `attemptAutoConnect`      | `boolean`                                                |          | If set to true on initial mount, the connect function will be called as soon as possible. If `preselectedWalletId` is also set and a wallet has previously connected and enabled, this can be used to seamlessly reconnect a past session. |
+| `renderLoader`            | `() => ReactNode`                                        |          | A custom loader to display in a few modals, such as when enabling the wallet.                                                                                                                                                              |
 
 ### useWalletManager
 
