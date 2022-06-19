@@ -1,1 +1,0 @@
-{"version":3,"file":"WalletConnectQRCodeModal.d.ts","sourceRoot":"","sources":["../../src/components/WalletConnectQRCodeModal.tsx"],"names":[],"mappings":"AAKA,OAAc,EAAE,iBAAiB,EAAgC,MAAM,OAAO,CAAA;AAE9E,OAAO,EAAa,cAAc,EAAkB,MAAM,aAAa,CAAA;AAIvE,eAAO,MAAM,wBAAwB,EAAE,iBAAiB,CACtD,cAAc,GAAG;IACf,GAAG,CAAC,EAAE,MAAM,CAAA;CACb,CAkHF,CAAA"}

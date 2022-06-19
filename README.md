@@ -1,33 +1,17 @@
-# Cosmodal
+# @noahsaso/cosmodal
 
-Connecting web applications to the Cosmos ecosystem.
+A wallet connector with mobile WalletConnect support for the Cosmos ecosystem.
 
-## Preview
-
-You can test the library on https://cosmodal.vercel.app/
-
-![preview](./preview.png)
-
-## Running example locally
-
-```
-yarn && yarn start
-
-# OR
-
-npm install && npm run start
-```
-
-## Usage
+## Setup
 
 1. Install the Cosmodal package in your React project
 
 ```
-yarn add cosmodal
+yarn add @noahsaso/cosmodal
 
 # OR
 
-npm install --save cosmodal
+npm install --save @noahsaso/cosmodal
 ```
 
 2. Import `WalletManagerProvider` and wrap it around your whole app. Only include it once as an ancestor of all components that need to access the wallet. Likely you'll want this in your root App component.
@@ -42,7 +26,7 @@ import {
   Wallet,
   WalletClient,
   WalletManagerProvider,
-} from "cosmodal"
+} from "@noahsaso/cosmodal"
 import type { AppProps } from "next/app"
 import Head from "next/head"
 import { EmbedChainInfos } from "../config"
@@ -114,7 +98,11 @@ export default MyApp
 
 ```tsx
 import { Keplr } from "@keplr-wallet/types"
-import { KeplrWalletConnectV1, useWalletManager, WalletClient } from "cosmodal"
+import {
+  KeplrWalletConnectV1,
+  useWalletManager,
+  WalletClient,
+} from "@noahsaso/cosmodal"
 import type { NextPage } from "next"
 import { useEffect, useState } from "react"
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate"
@@ -270,7 +258,7 @@ interface WalletManagerContextInfo {
 This component takes the following properties:
 
 | Property                  | Type                                                     | Required | Description                                                                                                                                                                                                                                |
-| ------------------------- | -------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| ------------------------- | -------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `wallets`                 | `Wallet[]`                                               | &#x2611; | Wallets available for connection.                                                                                                                                                                                                          |
 | `enableWallet`            | `(wallet: Wallet, client: WalletClient) => Promise<void> | void`    | &#x2611;                                                                                                                                                                                                                                   | Function that enables the wallet once one is selected. |
 | `classNames`              | `ModalClassNames`                                        |          | Class names applied to various components for custom theming.                                                                                                                                                                              |
@@ -291,14 +279,3 @@ This hook returns the following properties in an object (`WalletManagerContextIn
 | `connectedWallet` | `ConnectedWallet \| undefined` | Connected wallet information and client.                                                                                                                                    |
 | `connectionError` | `unknown`                      | Error encountered during the connection process. Can be anything since the `enableWallet` function can throw anything.                                                      |
 | `isMobileWeb`     | `boolean`                      | If this app is running inside the Keplr Mobile web interface.                                                                                                               |
-
-## Learn More
-
-To learn more about Cosmodal API, please check [our example code](https://github.com/chainapsis/cosmodal/tree/main/example)
-
-To learn more about how to use Keplr-specific API, please check the following resources:
-
-- [Keplr Example](https://github.com/chainapsis/keplr-example)
-- [Keplr Documentation](https://docs.keplr.app)
-
-To learn more about JavaScript client library for Cosmos check out [CosmJS](https://github.com/chainapsis/keplr-example)

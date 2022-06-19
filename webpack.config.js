@@ -10,7 +10,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
     libraryTarget: "umd",
-    library: "cosmodal",
+    library: "@noahsaso/cosmodal",
     umdNamedDefine: true,
     globalObject: "this",
   },
